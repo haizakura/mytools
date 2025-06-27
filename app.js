@@ -1,7 +1,6 @@
 // app.js
 // Service Application
 
-import bodyParser from 'body-parser';
 import express from 'express';
 import log4js from 'log4js';
 import history from 'connect-history-api-fallback';
@@ -21,17 +20,11 @@ app.use(log4js.connectLogger(
         format: ':remote-addr ":method :url" :status ":user-agent"',
     },
 ));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "GET");
     next();
 });
-app.use(history({
-    index: '/index.html',
-}));
-app.use(express.static(join(__dirname, 'public')));
 
 export { logger };
 
@@ -46,8 +39,8 @@ export { logger };
  */
 
 /** Rate Router **/
-import { rate_router } from './router/rate.js';
-app.use('/api/rate', rate_router);
+import { rateRouter } from './router/rate.js';
+app.use('/api', rateRouter);
 
 /** Router End **/
 
@@ -57,12 +50,14 @@ app.use('/api/rate', rate_router);
 app.get('/robots.txt', (req, res) => {
     res.type('text/plain');
     res.send("User-agent: *\nDisallow: /");
-    return;
 });
 
 /**
  * service start
  */
+app.use(history());
+app.use(express.static(join(__dirname, 'public')));
+
 app.listen(port, () => {
     logger.info('Service Starting...');
     logger.info(`The Service is listening on port ${port}.`);

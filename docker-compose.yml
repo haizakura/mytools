@@ -1,15 +1,12 @@
 version: "2"
 services:
-  node:
-    image: "node:lts-alpine"
+  server:
+    build: .
     user: "node"
-    working_dir: /home/app
-    environment:
-      - NODE_ENV=production
-    volumes:
-      - ./:/home/app
-    expose:
-      - "3010"
     ports:
       - "3010:3010"
-    command: "npm start"
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /home/app
