@@ -29,27 +29,27 @@ app.use((req, res, next) => {
 export { logger };
 
 /** Router Begin **/
+import { rateRouter } from "./router/rate.js";
 
 /**
  * Code Define
- * 
+ *
  * 200: OK
  * 400: Bad Request
  * 502: Bad Gateway
  */
 
 /** Rate Router **/
-import { rateRouter } from './router/rate.js';
-app.use('/api', rateRouter);
+app.use("/api", rateRouter);
 
 /** Router End **/
 
 /**
  * robots.txt
  */
-app.get('/robots.txt', (req, res) => {
-    res.type('text/plain');
-    res.send("User-agent: *\nDisallow: /");
+app.get("/robots.txt", (req, res) => {
+  res.type("text/plain");
+  res.send("User-agent: *\nDisallow:");
 });
 
 /**
