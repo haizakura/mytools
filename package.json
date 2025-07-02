@@ -4,6 +4,7 @@
   "exports": "./app.js",
   "author": "HAIZAKURA",
   "license": "MIT",
+  "homepage": "https://lab.nya.run/",
   "type": "module",
   "scripts": {
     "start": "node app.js"
